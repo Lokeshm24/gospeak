@@ -568,12 +568,14 @@ func TestSynthesizeSpeechify_SendsExpectedRequest(t *testing.T) {
 
 	var captured struct {
 		method, auth, accept string
+		caller               string
 		body                 SpeechifyTTSRequest
 	}
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		captured.method = r.Method
 		captured.auth = r.Header.Get("Authorization")
 		captured.accept = r.Header.Get("Accept")
+		captured.caller = r.Header.Get("Speechify-Caller")
 		_ = json.NewDecoder(r.Body).Decode(&captured.body)
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write(wantAudio)
@@ -597,6 +599,9 @@ func TestSynthesizeSpeechify_SendsExpectedRequest(t *testing.T) {
 	}
 	if captured.accept != "audio/mpeg" {
 		t.Errorf("accept = %q, want audio/mpeg", captured.accept)
+	}
+	if captured.caller != "gospeak" {
+		t.Errorf("Speechify-Caller = %q, want gospeak", captured.caller)
 	}
 	if captured.body.Input != "hello speechify" || captured.body.VoiceID != "geffen_32" || captured.body.Model != "simba-3.2" {
 		t.Errorf("body mismatch: %+v", captured.body)

@@ -71,6 +71,9 @@ var (
 	speechifyAPIURL     = "https://api.speechify.ai/v1/audio/stream"
 )
 
+// Sent on Speechify requests so Speechify can tell which tool is calling.
+const speechifyCaller = "gospeak"
+
 // The full OpenAI voice roster. marin and cedar are the two OpenAI singles out
 // as the best quality.
 var openAIVoices = []string{
@@ -1214,6 +1217,7 @@ func synthesizeSpeechify(apiKey, model, voiceID, text string) ([]byte, error) {
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "audio/mpeg")
 	req.Header.Set("Authorization", "Bearer "+apiKey)
+	req.Header.Set("Speechify-Caller", speechifyCaller)
 
 	client := &http.Client{Timeout: 120 * time.Second}
 	resp, err := client.Do(req)
