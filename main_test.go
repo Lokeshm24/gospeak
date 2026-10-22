@@ -584,7 +584,7 @@ func TestSynthesizeSpeechify_SendsExpectedRequest(t *testing.T) {
 
 	defer swapURL(&speechifyAPIURL, server.URL)()
 
-	got, err := synthesizeSpeechify("sp-test", "simba-3.2", "geffen_32", "hello speechify")
+	got, err := synthesizeSpeechify("sp-test", "simba-3.5", "geffen_32", "hello speechify")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -603,7 +603,7 @@ func TestSynthesizeSpeechify_SendsExpectedRequest(t *testing.T) {
 	if captured.caller != "gospeak" {
 		t.Errorf("Speechify-Caller = %q, want gospeak", captured.caller)
 	}
-	if captured.body.Input != "hello speechify" || captured.body.VoiceID != "geffen_32" || captured.body.Model != "simba-3.2" {
+	if captured.body.Input != "hello speechify" || captured.body.VoiceID != "geffen_32" || captured.body.Model != "simba-3.5" {
 		t.Errorf("body mismatch: %+v", captured.body)
 	}
 }
@@ -616,7 +616,7 @@ func TestSynthesizeSpeechify_ReturnsErrorOnNon200(t *testing.T) {
 	defer server.Close()
 	defer swapURL(&speechifyAPIURL, server.URL)()
 
-	_, err := synthesizeSpeechify("sp", "simba-3.2", "geffen_32", "hi")
+	_, err := synthesizeSpeechify("sp", "simba-3.5", "geffen_32", "hi")
 	if err == nil {
 		t.Fatal("expected error on 401")
 	}
@@ -645,7 +645,7 @@ func TestSynthesizeDeepgram_FailsOnUnreachable(t *testing.T) {
 
 func TestSynthesizeSpeechify_FailsOnUnreachable(t *testing.T) {
 	defer swapURL(&speechifyAPIURL, unreachableURL(t))()
-	_, err := synthesizeSpeechify("sp", "simba-3.2", "geffen_32", "hi")
+	_, err := synthesizeSpeechify("sp", "simba-3.5", "geffen_32", "hi")
 	assertNetworkError(t, err)
 }
 
@@ -669,7 +669,7 @@ func TestSynthesizeDeepgram_FailsOnMalformedURL(t *testing.T) {
 
 func TestSynthesizeSpeechify_FailsOnMalformedURL(t *testing.T) {
 	defer swapURL(&speechifyAPIURL, "://no-scheme")()
-	_, err := synthesizeSpeechify("sp", "simba-3.2", "geffen_32", "hi")
+	_, err := synthesizeSpeechify("sp", "simba-3.5", "geffen_32", "hi")
 	assertRequestBuildError(t, err)
 }
 
@@ -977,6 +977,9 @@ func TestRun_SpeechifyUsesDefaultsAndWarnsOnSpeed(t *testing.T) {
 	}
 	if body.VoiceID != defaultSpeechifyVoice || body.Model != defaultSpeechifyModel {
 		t.Errorf("request used voice %q model %q, want defaults", body.VoiceID, body.Model)
+	}
+	if body.Model != "simba-3.5" {
+		t.Errorf("default Speechify model = %q, want simba-3.5", body.Model)
 	}
 }
 

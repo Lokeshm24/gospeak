@@ -43,7 +43,7 @@ const (
 
 	// Speechify defaults
 	defaultSpeechifyVoice = "geffen_32"
-	defaultSpeechifyModel = "simba-3.2"
+	defaultSpeechifyModel = "simba-3.5"
 
 	defaultSpeed    = 1.0
 	defaultProvider = "openai"
@@ -440,7 +440,7 @@ func run(args []string, stdin io.Reader, stderr io.Writer, getenv func(string) s
 		fmt.Fprintf(stderr, "  Voices:  geffen (default), harper, dominic, wyatt, beatrice,\n")
 		fmt.Fprintf(stderr, "           imogen, edmund, hugh\n")
 		fmt.Fprintf(stderr, "           (or use a voice_id directly)\n")
-		fmt.Fprintf(stderr, "  Models:  simba-3.2 (default), simba-3.0\n")
+		fmt.Fprintf(stderr, "  Models:  simba-3.5 (default, 48 languages), simba-3.2 (English), simba-3.0\n")
 		fmt.Fprintf(stderr, "  Note:    Speed adjustment not supported\n\n")
 
 		fmt.Fprintf(stderr, "Config file (~/.gospeak.json):\n")

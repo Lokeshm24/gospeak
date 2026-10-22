@@ -259,7 +259,7 @@ gospeak -p speechify -v "geffen_32" "Using voice ID directly"
 
 **Speechify voices:** `geffen` (default), `harper`, `dominic`, `wyatt`, `beatrice`, `imogen`, `edmund`, `hugh`
 
-**Speechify models:** `simba-3.2` (default), `simba-3.0`
+**Speechify models:** `simba-3.5` (default, 48 languages, works with every voice), `simba-3.2` (English only), `simba-3.0`
 
 ### Sound Effects (ElevenLabs)
 
@@ -398,7 +398,7 @@ gospeak -p elevenlabs -m eleven_turbo_v2_5 "Turbo model"
 |---------|--------|------------|----------|-----------|
 | Env var | `OPENAI_API_KEY` | `ELEVENLABS_API_KEY` | `DEEPGRAM_API_KEY` | `SPEECHIFY_API_KEY` |
 | Default voice | `alloy` | `rachel` | `asteria` | `geffen` |
-| Default model | `tts-1-hd` | `eleven_multilingual_v2` | `aura-asteria-en` | `simba-3.2` |
+| Default model | `tts-1-hd` | `eleven_multilingual_v2` | `aura-asteria-en` | `simba-3.5` |
 | Speed range | 0.25 - 4.0 | 0.7 - 1.2 | Not supported | Not supported |
 | Voice count | 13 built-in | 14 presets + custom | 18 presets + custom | 8 presets + custom |
 | Custom voices | No | Yes (via voice_id) | Yes (via model name) | Yes (via voice_id) |
